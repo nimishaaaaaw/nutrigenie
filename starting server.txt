@@ -1,0 +1,8 @@
+running frontend
+conda activate healthplanner
+cd C:\Users\manis\3D Objects\health-planner\Streamlit_Frontend
+streamlit run 1_��_Diet_Recommendation.py
+backend
+conda activate healthplanner
+cd C:\Users\manis\3D Objects\health-planner\FastAPI_Backend
+python main.py
