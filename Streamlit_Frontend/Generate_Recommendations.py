@@ -1,7 +1,7 @@
 import requests
 import json
 
-BACKEND_URL = "https://nutrigenie-backend.onrender.com"
+BACKEND_URL ="https://nimishaaaw-nutrigenie-backend.hf.space"
 
 class Generator:
     def __init__(self, nutrition_input: list, ingredients: list = [], params: dict = {'n_neighbors': 5, 'return_distance': False}):
