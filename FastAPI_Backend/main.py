@@ -5,10 +5,21 @@ from pydantic import Field
 from typing import List
 from typing import Optional
 import pandas as pd
+import os
+import urllib.request
+
 from model import recommend, output_recommended_recipes
 
-import os
-dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), '..', 'Data', 'dataset.csv.gz'), compression='gzip')
+# Download dataset if not already present
+DATA_PATH = os.path.join(os.path.dirname(__file__), 'dataset.csv.gz')
+DATASET_URL = "https://huggingface.co/datasets/nimishaaaw/nutrigenie-data/resolve/main/dataset.csv.gz"
+
+if not os.path.exists(DATA_PATH):
+    print("Downloading dataset from Hugging Face...")
+    urllib.request.urlretrieve(DATASET_URL, DATA_PATH)
+    print("Dataset download complete.")
+
+dataset = pd.read_csv(DATA_PATH, compression='gzip')
 
 app = FastAPI()
 
@@ -19,8 +30,8 @@ class params(BaseModel):
 
 
 class PredictionIn(BaseModel):
-    nutrition_input:List[float] = Field(min_items=9, max_items=9)
-    ingredients: list[str] = []
+    nutrition_input: List[float] = Field(min_items=9, max_items=9)
+    ingredients: List[str] = []
     params: Optional[params]
 
 
@@ -29,7 +40,7 @@ class Recipe(BaseModel):
     CookTime: str
     PrepTime: str
     TotalTime: str
-    RecipeIngredientParts: list[str]
+    RecipeIngredientParts: List[str]
     Calories: float
     FatContent: float
     SaturatedFatContent: float
@@ -39,7 +50,7 @@ class Recipe(BaseModel):
     FiberContent: float
     SugarContent: float
     ProteinContent: float
-    RecipeInstructions: list[str]
+    RecipeInstructions: List[str]
 
 
 class PredictionOut(BaseModel):
@@ -53,8 +64,12 @@ def home():
 
 @app.post("/predict/", response_model=PredictionOut)
 def update_item(prediction_input: PredictionIn):
-    recommendation_dataframe = recommend(dataset, prediction_input.nutrition_input, prediction_input.ingredients,
-                                         prediction_input.params.dict())
+    recommendation_dataframe = recommend(
+        dataset,
+        prediction_input.nutrition_input,
+        prediction_input.ingredients,
+        prediction_input.params.dict()
+    )
     output = output_recommended_recipes(recommendation_dataframe)
     if output is None:
         return {"output": None}
