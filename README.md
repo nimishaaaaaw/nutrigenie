@@ -84,17 +84,19 @@ Uses the **Food.com Recipes & Interactions** dataset from Kaggle — over **500,
 ## 📸 Screenshots
 
 ### 🏠 Diet Recommendation Page
-![Diet Recommendation](screenshots/diet_recommendation.png)
+![Diet Recommendation](screenshots/nutrigenie.png)
 
 ### 📊 BMI & Calories Calculator
-![BMI Calculator](screenshots/bmi_calories.png)
+![BMI Calculator](bmibmr.png)
 
 ### 🍱 Meal Composition Planner
-![Meal Composition](screenshots/meal_composition.png)
+![Meal Composition](bargraph.png)
+![Meal Composition](donou.png)
 
 ### 🎯 Custom Food Recommendation
-![Custom Food](screenshots/custom_food.png)
-
+![Custom Food](screenshots/custom.png)
+![Custom Food](screenshots/custom2.png)
+![Custom Food](screenshots/customdonut.png)
 ---
 
 ## 🖥 Run Locally
